@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  master:
+    image: hongviet119/jmeter-server:5.0
+    container_name: jmeter
+    command: tail -f /dev/null
+    volumes:
+      - ./data:/data
+  server:
+    image: hongviet119/jmeter-server:5.0
+    container_name: jmeter-server
+    command: bin/jmeter-server -D "java.rmi.server.hostname=${HOST_IP}" -D "server_port=1099" -D "server.rmi.localport=50000"
+    tty: true
+    ports:
+      - "50000:50000"
+      - "1099:1099"
+    volumes:
+      - ./data:/data
+
